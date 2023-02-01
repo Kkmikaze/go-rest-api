@@ -1,7 +1,7 @@
 run:
 	go run main.go
-
-run migrate:
+	
+migrate:
 	go run db/migrate/migrate.go
 
 build:
