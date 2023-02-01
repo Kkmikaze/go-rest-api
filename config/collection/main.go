@@ -1,7 +1,7 @@
 package collection
 
 import (
-	"github.com/Kkmikaze/go-rest-api/app/controllers/user"
+	"github.com/Kkmikaze/go-rest-api/app/controller/user"
 	"github.com/Kkmikaze/go-rest-api/config/middleware"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"

@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/Kkmikaze/go-rest-api/app/controllers/root"
+	"github.com/Kkmikaze/go-rest-api/app/controller/root"
 	"github.com/Kkmikaze/go-rest-api/config/collection"
 	"github.com/Kkmikaze/go-rest-api/db"
 	"github.com/gin-gonic/gin"
