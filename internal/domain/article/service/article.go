@@ -13,8 +13,8 @@ type ArticleServiceInterface interface {
 	Create(reqBody *entity.ReqBodyCreateArticle) (int, error)
 	Index() ([]entity.ResBodyArticle, int, error)
 	Show(slug string) (*entity.ResBodyArticleDetail, int, error)
-	Update(slug string, reqBody *entity.ReqBodyUpdateArticle) (*entity.ResBodyArticleDetail, int, error)
-	Delete(slug string) (int, error)
+	Update(slug string, userID string, reqBody *entity.ReqBodyUpdateArticle) (*entity.ResBodyArticleDetail, int, error)
+	Delete(slug string, userID string) (int, error)
 }
 
 type articleService struct {
@@ -64,7 +64,7 @@ func (s *articleService) Show(slug string) (*entity.ResBodyArticleDetail, int, e
 		return nil, http.StatusInternalServerError, err
 	}
 	if article.ID == "" {
-		return nil, http.StatusNotFound, errors.New("article not found")
+		return nil, http.StatusNotFound, errors.New(constant.RecordNotFound)
 	}
 	resBody := &entity.ResBodyArticleDetail{
 		ID:        article.ID,
@@ -78,11 +78,16 @@ func (s *articleService) Show(slug string) (*entity.ResBodyArticleDetail, int, e
 	return resBody, http.StatusOK, nil
 }
 
-func (s *articleService) Update(slug string, reqBody *entity.ReqBodyUpdateArticle) (*entity.ResBodyArticleDetail, int, error) {
+func (s *articleService) Update(slug string, userID string, reqBody *entity.ReqBodyUpdateArticle) (*entity.ResBodyArticleDetail, int, error) {
 	article, err := s.Repository.FirstBySlug(&slug)
 	if err != nil {
 		return nil, http.StatusBadRequest, errors.New(constant.RecordNotFound)
 	}
+
+	if userID != article.UserID {
+		return nil, http.StatusUnauthorized, errors.New(constant.NotAuthorize)
+	}
+
 	if err := s.Repository.Update(article, reqBody); err != nil {
 		return nil, http.StatusInternalServerError, err
 	}
@@ -103,14 +108,16 @@ func (s *articleService) Update(slug string, reqBody *entity.ReqBodyUpdateArticl
 	return resBody, http.StatusOK, nil
 }
 
-func (s *articleService) Delete(slug string) (int, error) {
+func (s *articleService) Delete(slug string, userID string) (int, error) {
 	article, err := s.Repository.FirstBySlug(&slug)
 	if err != nil {
-		return http.StatusInternalServerError, err
+		return http.StatusBadRequest, errors.New(constant.RecordNotFound)
 	}
-	if article.ID == "" {
-		return http.StatusNotFound, errors.New("article not found")
+
+	if userID != article.UserID {
+		return http.StatusUnauthorized, errors.New(constant.NotAuthorize)
 	}
+
 	if err := s.Repository.Delete(article); err != nil {
 		return http.StatusInternalServerError, err
 	}

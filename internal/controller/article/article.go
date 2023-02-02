@@ -81,7 +81,13 @@ func (ac *articleController) Update(context *gin.Context) {
 		return
 	}
 
-	resBody, errStatus, err := ac.ArticleService.Update(slug, &reqBody)
+	authUser, err := authLib.GetAuthUserCtx(context)
+	if err != nil {
+		response.Error(context, http.StatusUnauthorized, err.Error())
+		return
+	}
+
+	resBody, errStatus, err := ac.ArticleService.Update(slug, authUser.ID, &reqBody)
 	if err != nil {
 		response.Error(context, errStatus, err.Error())
 		return
@@ -97,7 +103,13 @@ func (ac *articleController) Delete(context *gin.Context) {
 		return
 	}
 
-	if errStatus, err := ac.ArticleService.Delete(slug); err != nil {
+	authUser, err := authLib.GetAuthUserCtx(context)
+	if err != nil {
+		response.Error(context, http.StatusUnauthorized, err.Error())
+		return
+	}
+
+	if errStatus, err := ac.ArticleService.Delete(slug, authUser.ID); err != nil {
 		response.Error(context, errStatus, err.Error())
 		return
 	}
