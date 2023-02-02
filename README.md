@@ -80,7 +80,7 @@ This application uses:
 ### Running The App
 - First get the dependencies with this command:
 ```shell
-go mod tidy
+go mod download && go mod verify
 ```
 
 - Copy the `.env.example` to `.env` with run this command:
