@@ -29,7 +29,7 @@ func ArticleService(repository repository.ArticleRepositoryInterface) ArticleSer
 
 func (s *articleService) Create(reqBody *entity.ReqBodyCreateArticle) (int, error) {
 	slug := entity.Slugify(reqBody.Title)
-	checkArticle := s.Repository.IsAvailableSlug(slug)
+	checkArticle := s.Repository.IsAvailableSlug(&slug)
 	if !checkArticle {
 		return http.StatusConflict, errors.New("article already exists")
 	}

@@ -9,7 +9,7 @@ import (
 
 type ArticleRepositoryInterface interface {
 	FirstBySlug(slug *string) (entity.Article, error)
-	IsAvailableSlug(slug string) bool
+	IsAvailableSlug(slug *string) bool
 	All() ([]entity.Article, error)
 	Create(reqBody *entity.ReqBodyCreateArticle) error
 	Update(article entity.Article, reqBody *entity.ReqBodyUpdateArticle) error
@@ -33,7 +33,7 @@ func (r *articleRepository) FirstBySlug(slug *string) (article entity.Article, e
 	return article, nil
 }
 
-func (r *articleRepository) IsAvailableSlug(slug string) bool {
+func (r *articleRepository) IsAvailableSlug(slug *string) bool {
 	var article entity.Article
 	if err := r.DB.Where("slug = ?", slug).Find(&article).RowsAffected; err != 0 {
 		return false

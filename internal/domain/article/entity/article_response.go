@@ -1,6 +1,8 @@
 package entity
 
-import "time"
+import (
+	"time"
+)
 
 type ResBodyArticle struct {
 	ID        string    `json:"id"`

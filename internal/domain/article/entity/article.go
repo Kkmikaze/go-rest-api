@@ -4,18 +4,18 @@ import (
 	"strings"
 	"time"
 
-	"github.com/Kkmikaze/go-rest-api/internal/domain/user/entity"
+	ue "github.com/Kkmikaze/go-rest-api/internal/domain/user/entity"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
 type Article struct {
-	ID        string      `gorm:"type:char(36);primary_key"`
-	UserID    string      `gorm:"type:char(36);not null"`
-	User      entity.User `gorm:"foreignKey:UserID"`
-	Title     string      `gorm:"type:varchar(255);not null"`
-	Slug      string      `gorm:"type:varchar(255);not null;unique"`
-	Body      string      `gorm:"type:text;not null"`
+	ID        string  `gorm:"type:char(36);primary_key"`
+	UserID    string  `gorm:"type:char(36);not null"`
+	User      ue.User `gorm:"foreignKey:UserID"`
+	Title     string  `gorm:"type:varchar(255);not null"`
+	Slug      string  `gorm:"type:varchar(255);not null;unique"`
+	Body      string  `gorm:"type:text;not null"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
