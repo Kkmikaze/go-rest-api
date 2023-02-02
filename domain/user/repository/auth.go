@@ -32,7 +32,7 @@ func (r *authRepository) FirstByEmail(email *string) (user model.User, err error
 
 func (r *authRepository) FirstByID(id string) (model.User, error) {
 	var user model.User
-	if err := r.DB.Preload("Role").Where("id = ?", id).First(&user).Error; err != nil {
+	if err := r.DB.Where("id = ?", id).First(&user).Error; err != nil {
 		return user, err
 	}
 	return user, nil
