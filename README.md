@@ -23,6 +23,8 @@ This application uses:
 .
 ├── app
 |   └── contoller
+|       ├── article
+|       │   └── article.go
 |       ├── root
 |       │   └── root.go
 |       └── user
@@ -40,6 +42,14 @@ This application uses:
 |   ├── db.go
 |   └── postgresql.go
 ├── domain
+|   └── article
+|   │   ├── model
+|   │   │   ├── article_request.go
+|   │   │   ├── article_response.go
+|   │   │   └── article.go
+|   │   ├── repository
+|   │   │   └── article.go
+|   │   └── article.go
 |   └── user
 |       ├── model
 |       │   ├── user_request.go
@@ -75,7 +85,7 @@ go mod tidy
 
 - Copy the `.env.example` to `.env` with run this command:
 ```shell
-cp .env.example .env
+make env
 ```
 
 - for migrate database schema use this command:
