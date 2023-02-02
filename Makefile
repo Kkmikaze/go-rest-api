@@ -6,3 +6,6 @@ migrate:
 
 build:
 	go build -o bin/main main.go
+
+env:
+	cp .env.example .env
