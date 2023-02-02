@@ -6,6 +6,7 @@ import (
 	"github.com/Kkmikaze/go-rest-api/domain/article"
 	"github.com/Kkmikaze/go-rest-api/domain/article/model"
 	"github.com/Kkmikaze/go-rest-api/domain/article/repository"
+	authLib "github.com/Kkmikaze/go-rest-api/lib/auth"
 	"github.com/Kkmikaze/go-rest-api/lib/response"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -23,6 +24,15 @@ func ArticleController(db *gorm.DB) *articleController {
 
 func (ac *articleController) Create(context *gin.Context) {
 	var reqBody model.ReqBodyCreateArticle
+
+	authUser, err := authLib.GetAuthUserCtx(context)
+	if err != nil {
+		response.Error(context, http.StatusUnauthorized, err.Error())
+		return
+	}
+
+	reqBody.UserID = authUser.ID
+
 	if err := context.ShouldBind(&reqBody); err != nil {
 		response.Error(context, http.StatusBadRequest, err.Error())
 		return
@@ -31,7 +41,7 @@ func (ac *articleController) Create(context *gin.Context) {
 		response.Error(context, errStatus, err.Error())
 		return
 	}
-	response.Json(context, http.StatusOK, "Create success", nil)
+	response.Json(context, http.StatusOK, "Success create article", nil)
 }
 
 func (ac *articleController) Index(context *gin.Context) {
@@ -40,7 +50,7 @@ func (ac *articleController) Index(context *gin.Context) {
 		response.Error(context, errStatus, err.Error())
 		return
 	}
-	response.Json(context, http.StatusOK, "Index success", resBody)
+	response.Json(context, http.StatusOK, "Success get all articles", resBody)
 }
 
 func (ac *articleController) Show(context *gin.Context) {
@@ -55,19 +65,28 @@ func (ac *articleController) Show(context *gin.Context) {
 		response.Error(context, errStatus, err.Error())
 		return
 	}
-	response.Json(context, http.StatusOK, "Show success", resBody)
+	response.Json(context, http.StatusOK, "Success get article", resBody)
 }
 
 func (ac *articleController) Update(context *gin.Context) {
-	var reqBody model.ReqBodyUpdateArticle
-	if err := context.ShouldBind(&reqBody); err != nil {
-		response.Error(context, http.StatusBadRequest, err.Error())
-		return
-	}
-
 	slug := context.Param("slug")
 	if slug == "" {
 		response.Error(context, http.StatusBadRequest, "Slug is required")
+		return
+	}
+
+	var reqBody model.ReqBodyUpdateArticle
+
+	authUser, err := authLib.GetAuthUserCtx(context)
+	if err != nil {
+		response.Error(context, http.StatusUnauthorized, err.Error())
+		return
+	}
+
+	reqBody.UserID = authUser.ID
+
+	if err := context.ShouldBind(&reqBody); err != nil {
+		response.Error(context, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -77,7 +96,7 @@ func (ac *articleController) Update(context *gin.Context) {
 		return
 	}
 
-	response.Json(context, http.StatusOK, "Update success", resBody)
+	response.Json(context, http.StatusOK, "Success update article", resBody)
 }
 
 func (ac *articleController) Delete(context *gin.Context) {
@@ -92,5 +111,5 @@ func (ac *articleController) Delete(context *gin.Context) {
 		return
 	}
 
-	response.Json(context, http.StatusOK, "Delete success", nil)
+	response.Json(context, http.StatusOK, "Success delete article", nil)
 }

@@ -48,6 +48,7 @@ func (s *articleService) Index() ([]model.ResBodyArticle, int, error) {
 	for _, article := range articles {
 		resBody = append(resBody, model.ResBodyArticle{
 			ID:        article.ID,
+			Author:    article.User.Name,
 			Title:     article.Title,
 			Slug:      article.Slug,
 			CreatedAt: article.CreatedAt,
@@ -67,6 +68,7 @@ func (s *articleService) Show(slug string) (*model.ResBodyArticleDetail, int, er
 	}
 	resBody := &model.ResBodyArticleDetail{
 		ID:        article.ID,
+		Author:    article.User.Name,
 		Title:     article.Title,
 		Slug:      article.Slug,
 		Body:      article.Body,
@@ -91,6 +93,7 @@ func (s *articleService) Update(slug string, reqBody *model.ReqBodyUpdateArticle
 
 	resBody := &model.ResBodyArticleDetail{
 		ID:        updateArticle.ID,
+		Author:    updateArticle.User.Name,
 		Title:     updateArticle.Title,
 		Slug:      updateArticle.Slug,
 		Body:      updateArticle.Body,

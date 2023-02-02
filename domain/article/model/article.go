@@ -4,12 +4,15 @@ import (
 	"strings"
 	"time"
 
+	"github.com/Kkmikaze/go-rest-api/domain/user/model"
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
 type Article struct {
 	ID        string
+	UserID    string
+	User      model.User
 	Title     string
 	Slug      string
 	Body      string

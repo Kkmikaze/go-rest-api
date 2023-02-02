@@ -27,7 +27,7 @@ func ArticleRepository(DB *gorm.DB) ArticleRepositoryInterface {
 }
 
 func (r *articleRepository) FirstBySlug(slug *string) (article model.Article, err error) {
-	if err := r.DB.Where("slug = ?", slug).First(&article).Error; err != nil {
+	if err := r.DB.Preload("User").Where("slug = ?", slug).First(&article).Error; err != nil {
 		return article, err
 	}
 	return article, nil
@@ -43,21 +43,22 @@ func (r *articleRepository) IsAvailableSlug(slug string) bool {
 
 func (r *articleRepository) All() ([]model.Article, error) {
 	var articles []model.Article
-	if err := r.DB.Find(&articles).Error; err != nil {
+	if err := r.DB.Preload("User").Find(&articles).Error; err != nil {
 		return articles, err
 	}
-
 	return articles, nil
 }
 
 func (r *articleRepository) Create(reqBody *model.ReqBodyCreateArticle) error {
 	var article model.Article
+	article.UserID = reqBody.UserID
 	article.Title = reqBody.Title
 	article.Body = reqBody.Body
 	return r.DB.Create(&article).Error
 }
 
 func (r *articleRepository) Update(article model.Article, reqBody *model.ReqBodyUpdateArticle) error {
+	article.UserID = reqBody.UserID
 	article.Title = reqBody.Title
 	article.Body = reqBody.Body
 	article.UpdatedAt = time.Now()

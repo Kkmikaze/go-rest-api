@@ -4,6 +4,7 @@ import "time"
 
 type ResBodyArticle struct {
 	ID        string    `json:"id"`
+	Author    string    `json:"author"`
 	Title     string    `json:"title"`
 	Slug      string    `json:"slug"`
 	CreatedAt time.Time `json:"created_at"`
@@ -12,6 +13,7 @@ type ResBodyArticle struct {
 
 type ResBodyArticleDetail struct {
 	ID        string    `json:"id"`
+	Author    string    `json:"author"`
 	Title     string    `json:"title"`
 	Slug      string    `json:"slug"`
 	Body      string    `json:"body"`
