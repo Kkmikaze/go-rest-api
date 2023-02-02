@@ -10,12 +10,12 @@ import (
 )
 
 type Article struct {
-	ID        string
-	UserID    string
-	User      model.User
-	Title     string
-	Slug      string
-	Body      string
+	ID        string     `gorm:"type:char(36);primary_key"`
+	UserID    string     `gorm:"type:char(36);not null"`
+	User      model.User `gorm:"foreignKey:UserID"`
+	Title     string     `gorm:"type:varchar(255);not null"`
+	Slug      string     `gorm:"type:varchar(255);not null;unique"`
+	Body      string     `gorm:"type:text;not null"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
