@@ -3,6 +3,7 @@
 ## Table Of Content
 - [Prerequisite](#prerequisites)
   - [Spesification](#spesification)
+  - [Layout](#layout)
 - [How To](#how-to)
 - [References](#references)
   - [GIT style](#git-style)
@@ -16,6 +17,54 @@ This application uses:
 - Gin
 - Gorm
 - PostgreSQL
+
+### Layout
+```
+.
+├── app
+|   └── contoller
+|       ├── root
+|       │   └── root.go
+|       └── user
+|           └── auth.go
+├── config
+|   ├── collection
+|   │   └── main.go
+|   ├── middleware
+|   │   └── auth.go
+|   ├── cors.go
+|   └── routes.go
+├── db
+|   ├── migrate
+|   │   └── migrate.go
+|   ├── db.go
+|   └── postgresql.go
+├── domain
+|   └── user
+|       ├── model
+|       │   ├── user_request.go
+|       │   ├── user_response.go
+|       │   └── user.go
+|       ├── repository
+|       │   └── auth.go
+|       └── auth.go
+├── lib
+|   ├── auth
+|   │   └── context.go
+|   ├── constant
+|   │   └── error.go
+|   ├── encrypt
+|   │   └── encrypt.go
+|   ├── env
+|   │   └── env.go
+|   └── response
+|       └── response.go
+├── go.mod
+├── go.sum
+├── main.go
+├── Makefile
+└── README.md
+```
 
 ## How To
 ### Running The App
