@@ -21,43 +21,47 @@ This application uses:
 ### Layout
 ```
 .
-├── app
-|   └── contoller
-|       ├── article
-|       │   └── article.go
-|       ├── root
-|       │   └── root.go
-|       └── user
-|           └── auth.go
+└── cmd
+|   ├── migration
+|   |   └── migration.go
+|   └── main.go
 ├── config
-|   ├── collection
-|   │   └── main.go
+|   ├── db
+|   |   ├── db.go
+|   |   └── postgresql.go
+|   ├── cors.go
+|   └── routers.go
+├── internal
+|   ├── contoller
+|   |   ├── article
+|   |   │   └── article.go
+|   |   ├── root
+|   |   │   └── root.go
+|   |   └── user
+|   |       └── auth.go
+|   ├── domain
+|   │   ├── article
+|   │   │   ├── model
+|   │   │   │   ├── article_request.go
+|   │   │   │   ├── article_response.go
+|   │   │   │   └── article.go
+|   │   │   ├── repository
+|   │   │   │   └── article.go
+|   │   │   └── service
+|   │   │       └── article.go
+|   │   └── user
+|   │       ├── model
+|   │       │   ├── user_request.go
+|   │       │   ├── user_response.go
+|   │       │   └── user.go
+|   │       ├── repository
+|   │       │   └── user.go
+|   │       └── service
+|   │           └── user.go
 |   ├── middleware
 |   │   └── auth.go
-|   ├── cors.go
-|   └── routes.go
-├── db
-|   ├── migrate
-|   │   └── migrate.go
-|   ├── db.go
-|   └── postgresql.go
-├── domain
-|   └── article
-|   │   ├── model
-|   │   │   ├── article_request.go
-|   │   │   ├── article_response.go
-|   │   │   └── article.go
-|   │   ├── repository
-|   │   │   └── article.go
-|   │   └── article.go
-|   └── user
-|       ├── model
-|       │   ├── user_request.go
-|       │   ├── user_response.go
-|       │   └── user.go
-|       ├── repository
-|       │   └── auth.go
-|       └── auth.go
+|   └── router
+|       └── main.go
 ├── lib
 |   ├── auth
 |   │   └── context.go
@@ -69,9 +73,11 @@ This application uses:
 |   │   └── env.go
 |   └── response
 |       └── response.go
+├── .env.example
+├── .gitignore
 ├── go.mod
 ├── go.sum
-├── main.go
+├── LICENSE
 ├── Makefile
 └── README.md
 ```

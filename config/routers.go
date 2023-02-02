@@ -1,9 +1,9 @@
 package config
 
 import (
-	"github.com/Kkmikaze/go-rest-api/app/controller/root"
-	"github.com/Kkmikaze/go-rest-api/config/collection"
-	"github.com/Kkmikaze/go-rest-api/db"
+	"github.com/Kkmikaze/go-rest-api/config/db"
+	"github.com/Kkmikaze/go-rest-api/internal/controller/root"
+	router "github.com/Kkmikaze/go-rest-api/internal/router"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,5 +14,5 @@ func init() {
 
 	Routers.GET("/", root.Index)
 	main := Routers.Group("v1")
-	collection.MainRouter(db.DB, main)
+	router.MainRouter(db.DB, main)
 }
