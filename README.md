@@ -86,7 +86,7 @@ This application uses:
 ### Running The App
 - First get the dependencies with this command:
 ```shell
-go mod download && go mod verify
+make mod
 ```
 
 - Copy the `.env.example` to `.env` with run this command:
@@ -96,7 +96,7 @@ make env
 
 - for migrate database schema use this command:
 ```shell
-make run migrate
+make migration
 ```
 
 - and for running the application can use this command:
